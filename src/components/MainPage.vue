@@ -4,6 +4,7 @@
       <ul>
         <li><router-link to="/main">Main page</router-link></li>
         <li><router-link to="/profile">Profile</router-link></li>
+        <li><router-link to="/create">Create recipe</router-link></li>
         <li>
           <router-link v-if="isLoggedIn" to="/login" @click="logout">Logout</router-link>
           <router-link v-else to="/login">Login</router-link>
@@ -57,15 +58,16 @@ export default {
   },
 
   async mounted() {
-    const response = await fetch('http://localhost:3000/recipe');
+    const response = await fetch('http://localhost:3000/recipes');
     this.recipes = await response.json();
   },
   
   methods: {
     async search() {
-      const response = await fetch(`http://localhost:3000/recipe/search?ingredients=${this.searchInput}`);
+      const response = await fetch(`http://localhost:3000/recipes/search?ingredients=${this.searchInput}`);
       this.recipes = await response.json();
     },
   },
 }
 </script>
+  

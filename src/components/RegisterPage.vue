@@ -1,4 +1,5 @@
 <template>
+  <div class="image"></div>
     <div class="d-grid container-fluid bt-3 mt-3">
       <div class="row d-grid align-content-center justify-content-center">
         <div>
@@ -68,14 +69,22 @@
   }
   </script>
   
-  <style>
+  <style scoped>
   .container-fluid {
     min-height: 600px;
   }
   
-  body {
+  .image {
     background-image: url(../assets/1.jpg);
     background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
   }
   
   .naslov {

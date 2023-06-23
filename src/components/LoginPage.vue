@@ -1,4 +1,5 @@
 <template>
+  <div class="image"></div>
     <div class="d-grid container-fluid">
       <div class="row">
         <div class="col d-grid justify-content-center align-content-center">
@@ -69,5 +70,50 @@
 }
   </script>
   
-  <style>
+  <style scoped>
+  .container-fluid {
+    min-height: 600px;
+  }
+  
+  .image {
+    background-image: url(../assets/1.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+  }
+  
+  .naslov {
+    font-size: 100px;
+    font-weight: 100;
+    text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;
+    color: #ff6f00;
+    font-family: 'Brush Script MT';
+  }
+  
+  .text {
+    color: #a34700;
+  }
+  
+  .text:hover {
+    color: #ff7b169e;
+    transition: 0.7s;
+  }
+  
+  .gumb {
+    border-radius: 40px;
+    background-color: #ff6f00;
+    border-color: black;
+    box-shadow: 0px 0px 2px 2px black;
+  }
+  
+  .gumb:hover {
+    background-color: #ff7b169e;
+    transition: 0.7s;
+  }
   </style>
