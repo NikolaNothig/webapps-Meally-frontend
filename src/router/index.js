@@ -5,6 +5,7 @@ import MainPage from '../components/MainPage.vue';
 import CreateRecipe from '../components/CreateRecipe';
 import MyProfile from '../components/MyProfile.vue';
 import EditRecipe from '../components/EditRecipe.vue'
+import RecipeDetail from '../components/RecipeDetail.vue'
 
 
 const routes = [
@@ -34,14 +35,20 @@ const routes = [
     component: EditRecipe,
     props: true
   },
-  
+
   {
     path: '/profile',
     name: 'Profile',
     component: MyProfile
   },
-  
-  
+
+  {
+    path: '/recipe/:id',
+    name: 'recipe-detail',
+    component: RecipeDetail
+  },
+
+
 ]
 
 const router = createRouter({
