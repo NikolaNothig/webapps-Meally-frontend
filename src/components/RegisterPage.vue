@@ -3,11 +3,9 @@
     <div class="d-grid container-fluid bt-3 mt-3">
       <div class="row d-grid align-content-center justify-content-center">
         <div>
-          <a href="../main" class="text text-decoration-none">
-            <h1 class="text-center naslov display-1 fw-bold mb-5">
-              Meally
-            </h1>
-          </a>
+          <router-link to="../main" class="text text-decoration-none">
+            <h1 class="naslov fw-bold">Meally</h1>
+          </router-link>
         </div>
         <form @submit.prevent="register">
           <div>

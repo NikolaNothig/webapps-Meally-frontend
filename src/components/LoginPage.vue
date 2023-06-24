@@ -3,9 +3,9 @@
     <div class="d-grid container-fluid">
       <div class="row">
         <div class="col d-grid justify-content-center align-content-center">
-          <a href="../main" class="text text-decoration-none">
+          <router-link to="../main" class="text text-decoration-none">
             <h1 class="naslov fw-bold">Meally</h1>
-          </a>
+          </router-link>
         </div>
         <div class="col d-grid justify-content-start align-content-center">
           <div class="row-cols-auto">

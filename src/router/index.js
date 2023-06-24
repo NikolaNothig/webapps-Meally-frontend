@@ -4,6 +4,7 @@ import RegisterPage from '../components/RegisterPage.vue'
 import MainPage from '../components/MainPage.vue';
 import CreateRecipe from '../components/CreateRecipe';
 import MyProfile from '../components/MyProfile.vue';
+import EditRecipe from '../components/EditRecipe.vue'
 
 
 const routes = [
@@ -28,10 +29,19 @@ const routes = [
     component: CreateRecipe,
   },
   {
+    path: '/edit/:id',
+    name: 'EditRecipe',
+    component: EditRecipe,
+    props: true
+  },
+  
+  {
     path: '/profile',
     name: 'Profile',
     component: MyProfile
-  }
+  },
+  
+  
 ]
 
 const router = createRouter({
