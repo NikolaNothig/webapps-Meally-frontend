@@ -56,22 +56,26 @@
 import { ref, watchEffect, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router';
 
+function getCookie(name) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(';').shift();
+}
+
 export default {
   setup() {
-    const isLoggedIn = ref(!!localStorage.getItem('loginToken'))
+    const isLoggedIn = ref(!!getCookie('loginToken'))
     const searchInput = ref('')
     const allIngredients = ref([])
     const route = useRoute();
     const router = useRouter();
 
     watchEffect(() => {
-      isLoggedIn.value = !!localStorage.getItem('loginToken')
+      isLoggedIn.value = !!getCookie('loginToken')
     })
 
     const logout = () => {
-      localStorage.removeItem("username");
-      localStorage.removeItem("email");
-      localStorage.removeItem("loginToken");
+      document.cookie = "loginToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
       isLoggedIn.value = false
       router.push("/").then(() => {
         router.isReady().then(() => {
