@@ -69,16 +69,22 @@ export default {
     })
 
     const logout = () => {
-      const cookies = document.cookie.split(';');
-
-      for (let i = 0; i < cookies.length; i++) {
-        const cookie = cookies[i];
-        const eqPos = cookie.indexOf('=');
-        const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
-        document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/';
-        localStorage.removeItem('loginToken');
-      }
+      localStorage.removeItem("username");
+      localStorage.removeItem("email");
+      localStorage.removeItem("loginToken");
       isLoggedIn.value = false
+      router.push("/").then(() => {
+        router.isReady().then(() => {
+          window.location.reload();
+        });
+      });
+    }
+
+
+    const redirectToRegister = () => {
+      router.push("/register").then(() => {
+        window.location.reload();
+      });
     }
 
     const search = async () => {
@@ -117,6 +123,7 @@ export default {
     return {
       isLoggedIn,
       logout,
+      redirectToRegister,
       searchInput,
       search,
       route,

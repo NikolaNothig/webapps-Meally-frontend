@@ -35,43 +35,46 @@
 export default {
   data() {
     return {
-      username: "",
+      email: "",
       password: ""
-    }
+    };
   },
   methods: {
     async login() {
-      try {
-        const response = await fetch('https://meally-backend.onrender.com/user/login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email: this.email, password: this.password }),
-          credentials: 'include'
-        });
-        if (response.ok) {
-          console.log('Login successful');
-
-/*          const loginToken = document.cookie.split('; ').find(row => row.startsWith('loginToken')).split('=')[1];
-          const username = document.cookie.split('; ').find(row => row.startsWith('username')).split('=')[1];
-          const userId = document.cookie.split('; ').find(row => row.startsWith('userId')).split('=')[1];*/
-
-          localStorage.setItem('username', username);
-          localStorage.setItem('loginToken', loginToken);
-          localStorage.setItem('userId', userId);
-
-          this.$router.push('/main');
+      let json = { email: this.email, password: this.password };
+      await fetch('https://meally-backend.onrender.com/user/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(json),
+        credentials: 'include'
+      })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
         } else {
-          alert("Wrong email or password")
-          console.error('Error logging in', await response.text());
+          throw new Error("Login failed");
         }
-      } catch (error) {
-        console.error('Network error', error);
-      }
+      })
+      .then((data) => {
+        console.log(data);
+        const cookies = data.cookies;
+        if (!this.$cookies.get("loginToken")) {
+          this.$cookies.set("loginToken", cookies.loginToken);
+        }
+        if (!this.$cookies.get("email")) { 
+          this.$cookies.set("email", cookies.email);
+        }
+        if (!this.$cookies.get("username")) {
+          this.$cookies.set("username", cookies.username);
+        }
+        this.$router.push('/main');
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
     }
-
-
   }
-}
+};
 </script>
   
 <style scoped>

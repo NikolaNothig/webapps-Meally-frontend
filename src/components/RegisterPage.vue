@@ -42,33 +42,45 @@ export default {
     return {
       username: "",
       email: "",
-      password: ""
-    }
+      password: "",
+    };
   },
   methods: {
     async register() {
-      try {
-        const response = await fetch('https://meally-backend.onrender.com/user/register', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ username: this.username, email: this.email, password: this.password })
-        });
-
-        if (response.ok) {
-          const data = await response.json();
-          console.log('Registration successful', data);
-          this.$router.push('/login');
+      let json = {
+        username: this.username,
+        email: this.email,
+        password: this.password,
+      };
+      await fetch(`https://meally-backend.onrender.com/user/register`, {
+        method: "POST",
+        body: JSON.stringify(json),
+        headers: {
+          "Content-Type": "application/json; charset=utf-8",
+        },
+      })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
         } else {
-          console.error('Error registering', await response.text());
+          return res.json().then((data) => {
+            throw new Error(data.message);
+          });
         }
-      } catch (error) {
-        console.error('Network error', error);
-      }
+      })
+      .then((data) => {
+        console.log(data);
+        this.$router.push('/login');
+      })
+      .catch((error) => {
+        console.error("Error:", error.message);
+        alert(error.message);
+      });
     }
   }
-
-}
+};
 </script>
+
   
 <style scoped>
 .container-fluid {
