@@ -19,8 +19,8 @@
             </div>
             <div class="col">
               <button type="submit" class="btn fw-bold btn-lg gumb">Log in</button>
-              <h2>Dont have an account? <a href="../Register" class="text text-decoration-none">Register.</a></h2>
-              <h3 class="text-center">Back to <a href="../main" class="text text-decoration-none">main page.</a></h3>
+              <h2>Dont have an account? <a href="/register" class="text text-decoration-none">Register.</a></h2>
+              <h3 class="text-center">Back to <a href="/main" class="text text-decoration-none">main page.</a></h3>
             </div>
           </form>
         </div>
