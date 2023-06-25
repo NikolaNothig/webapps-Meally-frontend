@@ -1,12 +1,12 @@
 <template>
-  <div id="home" class="row">
+  <div id="home" class="row mt-4">
     <div v-for="recipe in recipes" :key="recipe._id" class="col-lg-4">
-      <router-link :to="`/recipe/${recipe._id}`">
+      <router-link :to="`/recipe/${recipe._id}`" class="link-stretched text-decoration-none text-dark">
         <div class="card mb-4">
           <div class="card-body">
-            <h5 class="card-title">{{ recipe.title }}</h5>
+            <h5 class="card-title recipe-title">{{ recipe.title }}</h5>
             <img :src="getImageUrl(recipe.image)" class="recipe-image" />
-            <h6 class="card-subtitle mb-2 text-muted">Created by: {{ recipe.createdBy.username }}</h6>
+            <h6 class="card-subtitle mb-5 mt-2 text-muted">Created by: {{ recipe.createdBy.username }}</h6>
             <p class="card-text">
               Ingredients:
               <span v-for="(ingredient, index) in recipe.ingredients.slice(0, 5)" :key="index">
@@ -125,6 +125,11 @@ export default {
 </script>
 
 <style scoped>
+.recipe-title {
+    font-family: 'Brush Script MT', cursive;
+    font-size: 2.5em;
+    color: black;
+}
 .recipe-image {
   max-width: auto;
   max-height: 200px;

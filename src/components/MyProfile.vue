@@ -5,7 +5,7 @@
       <div class="card mb-4 shadow">
         <div class="card-body">
           <router-link :to="`/recipe/${recipe._id}`" class="link-stretched text-decoration-none text-dark">
-            <h5 class="card-title">{{ recipe.title }}</h5>
+            <h5 class="card-title recipe-title">{{ recipe.title }}</h5>
             <img :src="getImageUrl(recipe.image)" class="recipe-image mb-3" alt="Recipe image" />
             <p class="card-text">
               Ingredients:
@@ -20,7 +20,7 @@
             </div>
           </router-link>
           <div class="mt-3 d-flex justify-content-between">
-            <button class="btn btn-primary" @click="editRecipe(recipe._id)">Edit</button>
+            <button class="btn btn-primary styled-button" @click="editRecipe(recipe._id)">Edit</button>
             <button class="btn btn-danger" @click="deleteRecipe(recipe._id)">Delete</button>
           </div>
         </div>
@@ -104,10 +104,12 @@ export default {
 </script>
 
 <style scoped>
+
 h2 {
   margin-bottom: 2rem;
   color: #ff6f00;
   font-family: 'Brush Script MT';
+  text-shadow: 2px 2px 10px rgba(0, 0, 0, 1);
 }
 
 .btn-primary {
@@ -129,5 +131,20 @@ h2 {
   height: auto;
   width: 100%;
   object-fit: cover;
+}
+.recipe-title {
+    font-family: 'Brush Script MT', cursive;
+    font-size: 2.5em;
+    color: black;
+}
+.styled-button {
+  background-color: orange;
+  border-color: rgb(183, 119, 0);
+  color: white;
+}
+.styled-button:hover, .styled-button:active, .styled-button:focus {
+    background-color: #ff8a00;
+    border-color: #ff8a00;
+    color: white;
 }
 </style>

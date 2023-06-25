@@ -19,7 +19,7 @@
         <input id="image" ref="image" type="file" class="form-control">
         <img :src="form.image" alt="Current Recipe Image" class="mt-3" width="200">
       </div>
-      <button type="submit" class="btn btn-primary mt-2">Update</button>
+      <button type="submit" class="btn btn-primary mt-2 styled-button">Update</button>
     </form>
     <p v-if="message" class="mt-3 text-center alert alert-info">{{ message }}</p>
   </div>
@@ -105,3 +105,22 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+h1 {
+  margin-bottom: 2rem;
+  color: #ff6f00;
+  font-family: 'Brush Script MT';
+  text-shadow: 2px 2px 10px rgba(0, 0, 0, 1);
+}
+.styled-button {
+  background-color: orange;
+  border-color: rgb(183, 119, 0);
+  color: white;
+}
+.styled-button:hover, .styled-button:active, .styled-button:focus {
+    background-color: #ff8a00;
+    border-color: #ff8a00;
+    color: white;
+}
+</style>

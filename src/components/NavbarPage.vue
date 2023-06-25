@@ -1,4 +1,5 @@
 <template>
+  <div class = "image"></div>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
       <div class="d-flex align-items-center">
@@ -158,7 +159,26 @@ export default {
   margin-left: 5px;
 }
 
+.styled-button:hover, .styled-button:active, .styled-button:focus {
+    background-color: #ff8a00;
+    border-color: #ff8a00;
+    color: white;
+}
+
 .clickable {
   cursor: pointer;
+}
+
+.image {
+  background-image: url(../assets/1.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
 }
 </style>

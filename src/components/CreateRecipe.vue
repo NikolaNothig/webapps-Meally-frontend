@@ -18,7 +18,7 @@
         <label for="image">Image:</label>
         <input type="file" ref="file" accept="image/*" class="form-control">
       </div>
-      <button type="submit" class="btn btn-primary">Create</button>
+      <button type="submit" class="btn btn-primary mt-2 styled-button">Create</button>
     </form>
     <p v-if="message" class="mt-3 text-center alert alert-info">{{ message }}</p>
   </div>
@@ -67,5 +67,21 @@ export default {
   },
 };
 </script>
-
-  
+<style scoped>
+.styled-button {
+  background-color: orange;
+  border-color: rgb(183, 119, 0);
+  color: white;
+}
+h1 {
+  margin-bottom: 2rem;
+  color: #ff6f00;
+  font-family: 'Brush Script MT';
+  text-shadow: 2px 2px 10px rgba(0, 0, 0, 1);
+}
+.styled-button:hover, .styled-button:active, .styled-button:focus {
+    background-color: #ff8a00;
+    border-color: #ff8a00;
+    color: white;
+}
+</style>

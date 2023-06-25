@@ -1,5 +1,5 @@
 <template>
-    <div v-if="recipe" class="container mt-5">
+    <div v-if="recipe" class="container mt-5 card">
         <h1 class="recipe-title mb-4">{{ recipe.title }}</h1>
         <img :src="getImageUrl(recipe.image)" class="recipe-image" />
         <div class="row">
@@ -23,25 +23,25 @@
                     <label for="rating" class="visually-hidden">Rating (1-5):</label>
                     <input type="number" v-model.number="newRating" min="1" max="5" id="rating" class="form-control"
                         placeholder="Rating (1-5)">
+                    <h5 class="mt-2">Average Rating: <span>{{ recipe.rating }}</span></h5>
                 </div>
                 <div class="col-auto">
                     <label for="difficulty" class="visually-hidden">Difficulty (1-5):</label>
                     <input type="number" v-model.number="newDifficulty" min="1" max="5" id="difficulty" class="form-control"
                         placeholder="Difficulty (1-5)">
+                    <h5 class="mt-2">Average Difficulty: <span>{{ recipe.difficulty }}</span></h5>
                 </div>
                 <div class="col-auto">
                     <button type="submit" class="btn btn-primary">Submit Rating</button>
                 </div>
             </form>
         </div>
-
         <div class="footer-info mt-5 text-center">
             <h4>Created by: <strong>{{ recipe.createdBy.username }}</strong></h4>
-            <h5>Average Rating: <span>{{ recipe.rating }}</span></h5>
-            <h5>Average Difficulty: <span>{{ recipe.difficulty }}</span></h5>
         </div>
     </div>
 </template>
+
 
 <script>
 export default {
@@ -199,11 +199,19 @@ export default {
 .rate-recipe-section {
     font-size: 0.8em;
 }
+
 .recipe-image {
-  max-width: 100%;
-  max-height: 400px;
-  height: auto;
-  width: 100%;
-  object-fit: cover;
+    max-width: 100%;
+    max-height: 400px;
+    height: auto;
+    width: 100%;
+    object-fit: cover;
+}
+
+.card {
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 </style>
