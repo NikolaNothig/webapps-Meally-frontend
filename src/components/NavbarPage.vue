@@ -82,7 +82,7 @@ export default {
     }
 
     const search = async () => {
-      const response = await fetch(`http://localhost:3000/recipes/search?ingredients=${searchInput.value}`);
+      const response = await fetch(`https://meally-backend.onrender.com/recipes/search?ingredients=${searchInput.value}`);
       const recipes = await response.json();
       console.log(recipes);
     }
@@ -109,7 +109,7 @@ export default {
     }
 
     onMounted(async () => {
-      const response = await fetch('http://localhost:3000/recipes');
+      const response = await fetch('https://meally-backend.onrender.com/recipes');
       const recipes = await response.json();
       allIngredients.value = [...new Set(recipes.flatMap(recipe => recipe.ingredients))];
     });

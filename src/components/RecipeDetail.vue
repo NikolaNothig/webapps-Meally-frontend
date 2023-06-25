@@ -69,7 +69,7 @@ export default {
     async created() {
         this.userId = this.$cookies.get('userId');
         const id = this.$route.params.id;
-        const response = await fetch(`http://localhost:3000/recipes/${id}`);
+        const response = await fetch(`https://meally-backend.onrender.com/recipes/${id}`);
         const recipe = await response.json();
         if (recipe.ingredients && recipe.title && recipe.preparation) {
             this.recipe = {
@@ -96,7 +96,7 @@ export default {
     },
     methods: {
         getImageUrl(imagePath) {
-            return `http://localhost:3000${imagePath}`;
+            return `https://meally-backend.onrender.com${imagePath}`;
         },
         calculateAverageRating(ratings) {
             if (!ratings || !ratings.length) return 0;
@@ -110,8 +110,8 @@ export default {
         },
         async submitRating() {
             const route = this.userHasRated ?
-                `http://localhost:3000/recipes/${this.recipe.id}/rate` :
-                `http://localhost:3000/recipes/${this.recipe.id}/rate`;
+                `https://meally-backend.onrender.com/recipes/${this.recipe.id}/rate` :
+                `https://meally-backend.onrender.com/recipes/${this.recipe.id}/rate`;
 
             const method = this.userHasRated ? 'PUT' : 'POST';
 

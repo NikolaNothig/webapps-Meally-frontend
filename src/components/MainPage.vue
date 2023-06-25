@@ -37,7 +37,7 @@ export default {
     const searchInput = ref('')
     const route = useRoute();
     const fetchRecipes = async () => {
-      let url = 'http://localhost:3000/recipes';
+      let url = 'https://meally-backend.onrender.com/recipes';
       if (route.query.search) {
         url += `/search?ingredients=${route.query.search}`;
       }
@@ -46,7 +46,7 @@ export default {
     };
 
     watch(() => route.query.search, async (search) => {
-      const response = await fetch(`http://localhost:3000/recipes/search?ingredients=${search}`);
+      const response = await fetch(`https://meally-backend.onrender.com/recipes/search?ingredients=${search}`);
       recipes.value = await response.json();
     }, { immediate: true });
 
@@ -73,7 +73,7 @@ export default {
     const allIngredients = ref([])
 
     const getImageUrl = (imagePath) => {
-      return `http://localhost:3000${imagePath}`;
+      return `https://meally-backend.onrender.com${imagePath}`;
     }
 
     return {
@@ -87,7 +87,7 @@ export default {
   },
 
   async mounted() {
-    const response = await fetch('http://localhost:3000/recipes');
+    const response = await fetch('https://meally-backend.onrender.com/recipes');
     this.recipes = await response.json();
 
     this.allIngredients = [...new Set(this.recipes.flatMap(recipe => recipe.ingredients))];
@@ -117,7 +117,7 @@ export default {
 
 
     async search() {
-      const response = await fetch(`http://localhost:3000/recipes/search?ingredients=${this.searchInput}`);
+      const response = await fetch(`https://meally-backend.onrender.com/recipes/search?ingredients=${this.searchInput}`);
       this.recipes = await response.json();
     },
   },

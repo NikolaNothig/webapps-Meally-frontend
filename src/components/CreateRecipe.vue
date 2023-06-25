@@ -46,7 +46,7 @@ export default {
       formData.append('preparation', this.form.preparation);
       formData.append('image', this.$refs.file.files[0]);
 
-      const response = await fetch('http://localhost:3000/recipes/create', {
+      const response = await fetch('https://meally-backend.onrender.com/recipes/create', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',

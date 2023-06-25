@@ -53,7 +53,7 @@ export default {
   }
 
   if (formData.has('image')) {
-    const response = await fetch(`http://localhost:3000/recipes/update/${this.id}`, {
+    const response = await fetch(`https://meally-backend.onrender.com/recipes/update/${this.id}`, {
       method: 'PUT',
       credentials: 'include',
       body: formData,
@@ -68,7 +68,7 @@ export default {
       this.message = data.error;
     }
   } else {
-    const response = await fetch(`http://localhost:3000/recipes/update/${this.id}`, {
+    const response = await fetch(`https://meally-backend.onrender.com/recipes/update/${this.id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -93,14 +93,14 @@ export default {
 }
   },
   async created() {
-    const response = await fetch(`http://localhost:3000/recipes/${this.id}`);
+    const response = await fetch(`https://meally-backend.onrender.com/recipes/${this.id}`);
     const recipe = await response.json();
     console.log(recipe);
     this.form = {
       title: recipe.title,
       ingredients: recipe.ingredients.join(' '),
       preparation: recipe.preparation,
-      image: `http://localhost:3000${recipe.image}`
+      image: `https://meally-backend.onrender.com${recipe.image}`
     }
   }
 };

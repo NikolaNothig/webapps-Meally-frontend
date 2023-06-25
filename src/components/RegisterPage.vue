@@ -25,11 +25,12 @@
     </div>
     <div class="row">
       <div>
-        <h3 class="text-center">Already have an account? <a href="/login" class="text text-decoration-none">Log in.</a>
-        </h3>
+        <h3 class="text-center">Already have an account? <router-link to="/login" class="text text-decoration-none">Log
+            in.</router-link></h3>
       </div>
       <div>
-        <h3 class="text-center">Back to <a href="/main" class="text text-decoration-none">main page.</a></h3>
+        <h3 class="text-center">Back to <router-link to="/main" class="text text-decoration-none">main page.</router-link>
+        </h3>
       </div>
     </div>
   </div>

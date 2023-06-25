@@ -19,8 +19,10 @@
             </div>
             <div class="col">
               <button type="submit" class="btn fw-bold btn-lg gumb">Log in</button>
-              <h2>Dont have an account? <a href="/register" class="text text-decoration-none">Register.</a></h2>
-              <h3 class="text-center">Back to <a href="/main" class="text text-decoration-none">main page.</a></h3>
+              <h2>Dont have an account? <router-link to="/register"
+                  class="text text-decoration-none">Register.</router-link></h2>
+              <h3 class="text-center">Back to <router-link to="/main" class="text text-decoration-none">main
+                  page.</router-link></h3>
             </div>
           </form>
         </div>
@@ -40,7 +42,7 @@ export default {
   methods: {
     async login() {
       try {
-        const response = await fetch('http://localhost:3000/user/login', {
+        const response = await fetch('https://meally-backend.onrender.com/user/login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email: this.email, password: this.password }),
@@ -59,7 +61,7 @@ export default {
 
           this.$router.push('/main');
         } else {
-          alert ("Wrong email or password")
+          alert("Wrong email or password")
           console.error('Error logging in', await response.text());
         }
       } catch (error) {

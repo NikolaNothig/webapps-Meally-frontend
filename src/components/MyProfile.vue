@@ -41,11 +41,11 @@ export default {
   },
   methods: {
     getImageUrl(imagePath) {
-      return `http://localhost:3000${imagePath}`;
+      return `https://meally-backend.onrender.com${imagePath}`;
     },
     async fetchMyRecipes() {
       try {
-        const response = await fetch(`http://localhost:3000/recipes/user/${this.$cookies.get('userId')}/recipes`);
+        const response = await fetch(`https://meally-backend.onrender.com/recipes/user/${this.$cookies.get('userId')}/recipes`);
         const responseData = await response.text();
         try {
           this.myRecipes = JSON.parse(responseData);
@@ -62,7 +62,7 @@ export default {
     },
     async deleteRecipe(id) {
       try {
-        const response = await fetch(`http://localhost:3000/recipes/delete/${id}`, {
+        const response = await fetch(`https://meally-backend.onrender.com/recipes/delete/${id}`, {
           method: 'DELETE',
           credentials: 'include'
         });
