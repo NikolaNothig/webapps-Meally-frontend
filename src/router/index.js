@@ -47,8 +47,10 @@ const routes = [
     name: 'recipe-detail',
     component: RecipeDetail
   },
-
-
+  {
+    path: '/',
+    redirect: '/main'
+  }
 ]
 
 const router = createRouter({

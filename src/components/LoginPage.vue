@@ -59,6 +59,7 @@ export default {
 
           this.$router.push('/main');
         } else {
+          alert ("Wrong email or password")
           console.error('Error logging in', await response.text());
         }
       } catch (error) {

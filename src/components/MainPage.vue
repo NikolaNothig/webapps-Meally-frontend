@@ -5,6 +5,7 @@
         <div class="card mb-4">
           <div class="card-body">
             <h5 class="card-title">{{ recipe.title }}</h5>
+            <img :src="getImageUrl(recipe.image)" class="recipe-image" />
             <h6 class="card-subtitle mb-2 text-muted">Created by: {{ recipe.createdBy.username }}</h6>
             <p class="card-text">
               Ingredients:
@@ -71,12 +72,17 @@ export default {
 
     const allIngredients = ref([])
 
+    const getImageUrl = (imagePath) => {
+      return `http://localhost:3000${imagePath}`;
+    }
+
     return {
       isLoggedIn,
       recipes,
       searchInput,
       logout,
-      allIngredients
+      allIngredients,
+      getImageUrl
     }
   },
 
@@ -108,6 +114,8 @@ export default {
       }
       return (total / ratings.length).toFixed(1);
     },
+
+
     async search() {
       const response = await fetch(`http://localhost:3000/recipes/search?ingredients=${this.searchInput}`);
       this.recipes = await response.json();
@@ -115,3 +123,13 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.recipe-image {
+  max-width: auto;
+  max-height: 200px;
+  height: auto;
+  width: 100%;
+  object-fit: cover;
+}
+</style>

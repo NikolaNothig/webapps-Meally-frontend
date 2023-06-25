@@ -155,6 +155,7 @@ export default {
   color: white;
   font-family: 'Brush Script MT';
   font-size: 1.2em;
+  margin-left: 5px;
 }
 
 .clickable {

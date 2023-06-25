@@ -6,6 +6,7 @@
         <div class="card-body">
           <router-link :to="`/recipe/${recipe._id}`" class="link-stretched text-decoration-none text-dark">
             <h5 class="card-title">{{ recipe.title }}</h5>
+            <img :src="getImageUrl(recipe.image)" class="recipe-image mb-3" alt="Recipe image" />
             <p class="card-text">
               Ingredients:
               <span v-for="(ingredient, index) in recipe.ingredients.slice(0, 5)" :key="index">
@@ -39,6 +40,9 @@ export default {
     }
   },
   methods: {
+    getImageUrl(imagePath) {
+      return `http://localhost:3000${imagePath}`;
+    },
     async fetchMyRecipes() {
       try {
         const response = await fetch(`http://localhost:3000/recipes/user/${this.$cookies.get('userId')}/recipes`);
@@ -118,4 +122,12 @@ h2 {
 
 .card {
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
-}</style>
+}
+.recipe-image {
+  max-width: auto;
+  max-height: 200px;
+  height: auto;
+  width: 100%;
+  object-fit: cover;
+}
+</style>

@@ -14,6 +14,10 @@
         <label for="preparation">Preparation:</label>
         <textarea v-model="form.preparation" required class="form-control"></textarea>
       </div>
+      <div class="form-group">
+        <label for="image">Image:</label>
+        <input type="file" ref="file" accept="image/*" class="form-control">
+      </div>
       <button type="submit" class="btn btn-primary">Create</button>
     </form>
     <p v-if="message" class="mt-3 text-center alert alert-info">{{ message }}</p>
@@ -36,17 +40,19 @@ export default {
     async submitForm() {
       const ingredientsArray = this.form.ingredients.split(' ').map(item => item.trim());
 
+      const formData = new FormData();
+      formData.append('title', this.form.title);
+      formData.append('ingredients', ingredientsArray);
+      formData.append('preparation', this.form.preparation);
+      formData.append('image', this.$refs.file.files[0]);
+
       const response = await fetch('http://localhost:3000/recipes/create', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Accept': 'application/json',
         },
         credentials: 'include',
-        body: JSON.stringify({
-          title: this.form.title,
-          ingredients: ingredientsArray,
-          preparation: this.form.preparation,
-        }),
+        body: formData,
       });
 
       const data = await response.json();
@@ -55,7 +61,7 @@ export default {
         this.message = data.message;
         window.location.href = '/main';
       } else {
-        this.message = data.error;
+        this.message = ("You didnt enter all required data");
       }
     },
   },
