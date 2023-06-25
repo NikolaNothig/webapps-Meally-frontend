@@ -1,27 +1,48 @@
 <template>
-    <div v-if="recipe">
-        <h1>{{ recipe.title }}</h1>
-        <h2>Created by: {{ recipe.createdBy.username }}</h2>
-        <h3>Ingredients:</h3>
-        <p>
-            <span v-for="(ingredient, index) in recipe.ingredients" :key="index">
-                {{ ingredient }}<span v-if="index < recipe.ingredients.length - 1">, </span>
+    <div v-if="recipe" class="container mt-5">
+      <h1 class="recipe-title mb-4">{{ recipe.title }}</h1>
+  
+      <div class="row">
+        <div class="col-md-6">
+          <h3 class="section-title">Preparation:</h3>
+          <p>{{ recipe.preparation }}</p>
+        </div>
+        <div class="col-md-6">
+          <h3 class="section-title">Ingredients:</h3>
+          <p>
+            <span v-for="(ingredient, index) in recipe.ingredients" :key="index" class="ingredient-badge">
+              {{ ingredient }}<span v-if="index < recipe.ingredients.length - 1">, </span>
             </span>
-        </p>
-        <h3>Preparation:</h3>
-        <p>{{ recipe.preparation }}</p>
-        <h3>Average Rating: {{ recipe.rating }}</h3>
-        <h3>Average Difficulty: {{ recipe.difficulty }}</h3>
-    </div>
-    <div v-if="userId">
+          </p>
+        </div>
+      </div>
+  
+      <div v-if="userId" class="rate-recipe-section text-center mt-4">
         <h3>Rate this recipe:</h3>
-        <form @submit.prevent="submitRating">
-            <label>Rating (1-5): <input type="number" v-model.number="newRating" min="1" max="5"></label>
-            <label>Difficulty (1-5): <input type="number" v-model.number="newDifficulty" min="1" max="5"></label>
-            <button type="submit">Submit Rating</button>
+        <form @submit.prevent="submitRating" class="row g-3 mt-3 justify-content-center">
+          <div class="col-auto">
+            <label for="rating" class="visually-hidden">Rating (1-5):</label>
+            <input type="number" v-model.number="newRating" min="1" max="5" id="rating" class="form-control"
+              placeholder="Rating (1-5)">
+          </div>
+          <div class="col-auto">
+            <label for="difficulty" class="visually-hidden">Difficulty (1-5):</label>
+            <input type="number" v-model.number="newDifficulty" min="1" max="5" id="difficulty" class="form-control"
+              placeholder="Difficulty (1-5)">
+          </div>
+          <div class="col-auto">
+            <button type="submit" class="btn btn-primary">Submit Rating</button>
+          </div>
         </form>
+      </div>
+  
+      <div class="footer-info mt-5 text-center">
+        <h4>Created by: <strong>{{ recipe.createdBy.username }}</strong></h4>
+        <h5>Average Rating: <span>{{ recipe.rating }}</span></h5>
+        <h5>Average Difficulty: <span>{{ recipe.difficulty }}</span></h5>
+      </div>
     </div>
-</template>
+  </template>
 
 <script>
 export default {
@@ -138,6 +159,40 @@ export default {
     }
 };
 </script>
-<style>
 
+<style scoped>
+.container {
+    font-family: Arial, sans-serif;
+}
+
+.recipe-title {
+    font-family: 'Brush Script MT', cursive;
+    font-size: 2.5em;
+    color: orange;
+}
+
+.section-title {
+    font-family: 'Brush Script MT', cursive;
+    color: orange;
+}
+
+.ingredient-badge {
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+.form-control {
+    border-radius: 0;
+    border: 2px solid #ddd;
+}
+
+.btn-primary {
+    background-color: #ff6f00;
+    border-color: #ff6f00;
+}
+
+.footer-info,
+.rate-recipe-section {
+    font-size: 0.8em;
+}
 </style>
