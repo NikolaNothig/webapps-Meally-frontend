@@ -51,9 +51,9 @@ export default {
         if (response.ok) {
           console.log('Login successful');
 
-          const loginToken = document.cookie.split('; ').find(row => row.startsWith('loginToken')).split('=')[1];
+/*          const loginToken = document.cookie.split('; ').find(row => row.startsWith('loginToken')).split('=')[1];
           const username = document.cookie.split('; ').find(row => row.startsWith('username')).split('=')[1];
-          const userId = document.cookie.split('; ').find(row => row.startsWith('userId')).split('=')[1];
+          const userId = document.cookie.split('; ').find(row => row.startsWith('userId')).split('=')[1];*/
 
           localStorage.setItem('username', username);
           localStorage.setItem('loginToken', loginToken);
