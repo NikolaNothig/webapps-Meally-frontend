@@ -32,10 +32,17 @@ import { watch } from 'vue';
 
 export default {
   setup() {
-    const isLoggedIn = ref(!!localStorage.getItem('loginToken'))
+    const isLoggedIn = ref(!!getCookie('loginToken')) // use getCookie here
     const recipes = ref([])
     const searchInput = ref('')
     const route = useRoute();
+    
+    function getCookie(name) {
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
+      if (parts.length === 2) return parts.pop().split(';').shift();
+    }
+
     const fetchRecipes = async () => {
       let url = 'https://meally-backend.onrender.com/recipes';
       if (route.query.search) {
@@ -51,24 +58,12 @@ export default {
     }, { immediate: true });
 
     watchEffect(() => {
-      isLoggedIn.value = !!localStorage.getItem('loginToken')
+      isLoggedIn.value = !!getCookie('loginToken') // use getCookie here
     })
     watchEffect(() => {
       fetchRecipes();
     }, { immediate: true });
     onMounted(fetchRecipes);
-
-    const logout = () => {
-      const cookies = document.cookie.split(';');
-      for (let i = 0; i < cookies.length; i++) {
-        const cookie = cookies[i];
-        const eqPos = cookie.indexOf('=');
-        const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
-        document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/';
-        localStorage.removeItem('loginToken');
-      }
-      isLoggedIn.value = false
-    }
 
     const allIngredients = ref([])
 
@@ -80,7 +75,6 @@ export default {
       isLoggedIn,
       recipes,
       searchInput,
-      logout,
       allIngredients,
       getImageUrl
     }
@@ -113,16 +107,11 @@ export default {
         total += rating.difficulty;
       }
       return (total / ratings.length).toFixed(1);
-    },
-
-
-    async search() {
-      const response = await fetch(`https://meally-backend.onrender.com/recipes/search?ingredients=${this.searchInput}`);
-      this.recipes = await response.json();
-    },
+    }
   },
 }
 </script>
+
 
 <style scoped>
 .recipe-title {
