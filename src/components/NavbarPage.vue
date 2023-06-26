@@ -56,12 +56,6 @@
 import { ref, watchEffect, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router';
 
-function getCookie(name) {
-  const value = `; ${document.cookie}`;
-  const parts = value.split(`; ${name}=`);
-  if (parts.length === 2) return parts.pop().split(';').shift();
-}
-
 export default {
   setup() {
     const isLoggedIn = ref(!!getCookie('loginToken'))
@@ -73,6 +67,12 @@ export default {
     watchEffect(() => {
       isLoggedIn.value = !!getCookie('loginToken')
     })
+
+    function getCookie(name) {
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
+      if (parts.length === 2) return parts.pop().split(';').shift();
+    }
 
     const logout = () => {
       document.cookie = "loginToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
