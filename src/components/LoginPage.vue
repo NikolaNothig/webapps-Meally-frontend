@@ -3,7 +3,7 @@
   <div class="d-grid container-fluid">
     <div class="row">
       <div class="col d-grid justify-content-center align-content-center">
-        <router-link to="../main" class="text text-decoration-none">
+        <router-link to="../" class="text text-decoration-none">
           <h1 class="naslov fw-bold">Meally</h1>
         </router-link>
       </div>
@@ -21,7 +21,7 @@
               <button type="submit" class="btn fw-bold btn-lg gumb">Log in</button>
               <h2>Dont have an account? <router-link to="/register"
                   class="text text-decoration-none">Register.</router-link></h2>
-              <h3 class="text-center">Back to <router-link to="/main" class="text text-decoration-none">main
+              <h3 class="text-center">Back to <router-link to="/" class="text text-decoration-none">main
                   page.</router-link></h3>
             </div>
           </form>
@@ -67,7 +67,7 @@ export default {
         if (!this.$cookies.get("username")) {
           this.$cookies.set("username", cookies.username);
         }
-        this.$router.push('/main');
+        this.$router.push('/');
       })
       .catch((error) => {
         console.error("Error:", error);

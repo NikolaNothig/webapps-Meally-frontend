@@ -96,11 +96,11 @@ export default {
 
     const resetSearch = () => {
       searchInput.value = '';
-      router.push({ path: '/main' });
+      router.push({ path: '/' });
     }
 
     const submitSearch = () => {
-      router.push({ path: '/main', query: { search: searchInput.value } });
+      router.push({ path: '/', query: { search: searchInput.value } });
     }
 
     const handleProfileClick = () => {

@@ -59,7 +59,7 @@ export default {
 
       if (response.ok) {
         this.message = data.message;
-        window.location.href = '/main';
+        window.location.href = '/';
       } else {
         this.message = ("You didnt enter all required data");
       }

@@ -63,7 +63,7 @@ export default {
 
     if (response.ok) {
       this.message = "Recipe updated successfully!";
-      this.$router.push('/main');
+      this.$router.push('/');
     } else {
       this.message = data.error;
     }
@@ -85,7 +85,7 @@ export default {
 
     if (response.ok) {
       this.message = "Recipe updated successfully!";
-      this.$router.push('/main');
+      this.$router.push('/');
     } else {
       this.message = data.error;
     }

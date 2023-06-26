@@ -3,7 +3,7 @@
   <div class="d-grid container-fluid bt-3 mt-3">
     <div class="row d-grid align-content-center justify-content-center">
       <div>
-        <router-link to="../main" class="text text-decoration-none">
+        <router-link to="../" class="text text-decoration-none">
           <h1 class="naslov fw-bold">Meally</h1>
         </router-link>
       </div>
@@ -29,7 +29,7 @@
             in.</router-link></h3>
       </div>
       <div>
-        <h3 class="text-center">Back to <router-link to="/main" class="text text-decoration-none">main page.</router-link>
+        <h3 class="text-center">Back to <router-link to="/" class="text text-decoration-none">main page.</router-link>
         </h3>
       </div>
     </div>
