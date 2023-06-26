@@ -116,7 +116,7 @@ export default {
     }
 
     onMounted(async () => {
-      const response = await fetch('https://meally-backend.onrender.com/user/check-login', {
+      const response = await fetch('https://meally-backend.onrender.com/user/check', {
         credentials: 'include'
       });
       if (response.status === 200) {
