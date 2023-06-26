@@ -131,8 +131,9 @@ export default {
 
       const uniqueIngredients = new Set();
       recipes.forEach(recipe => {
-        recipe.ingredients.forEach(ingredient => {
-          uniqueIngredients.add(ingredient);
+        const ingredientsArray = recipe.ingredients.split(',');
+        ingredientsArray.forEach(ingredient => {
+          uniqueIngredients.add(ingredient.trim());
         });
       });
 
