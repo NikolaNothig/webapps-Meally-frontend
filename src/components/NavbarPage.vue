@@ -55,6 +55,7 @@
 <script>
 import { ref, watchEffect, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router';
+import { useStore } from 'vuex';
 
 export default {
   setup() {
@@ -63,6 +64,7 @@ export default {
     const allIngredients = ref([])
     const route = useRoute();
     const router = useRouter();
+    const store = useStore();
 
     watchEffect(() => {
       isLoggedIn.value = !!getCookie('loginToken')
@@ -78,6 +80,7 @@ export default {
       document.cookie = "loginToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
       document.cookie = "email=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
       document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      store.dispatch('clearUserId');
       isLoggedIn.value = false;
       router.push("/login");
     }

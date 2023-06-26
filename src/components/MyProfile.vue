@@ -29,15 +29,17 @@
   </div>
 </template>
 
-
-
-
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
   data() {
     return {
       myRecipes: [],
     }
+  },
+  computed: {
+    ...mapGetters(['getUserId'])
   },
   methods: {
     getImageUrl(imagePath) {
@@ -45,10 +47,17 @@ export default {
     },
     async fetchMyRecipes() {
       try {
-        const response = await fetch(`https://meally-backend.onrender.com/recipes/user/${this.$cookies.get('userId')}/recipes`);
+        // get userId from Vuex store instead of cookie
+        const response = await fetch(`https://meally-backend.onrender.com/recipes/user/${this.getUserId}/recipes`);
         const responseData = await response.text();
         try {
-          this.myRecipes = JSON.parse(responseData);
+          let recipes = JSON.parse(responseData);
+          this.myRecipes = recipes.map(recipe => {
+            if(!recipe.ingredients) {
+              recipe.ingredients = [];
+            }
+            return recipe;
+          });
         } catch (err) {
           console.error('Failed to parse response as JSON', responseData);
           throw err;

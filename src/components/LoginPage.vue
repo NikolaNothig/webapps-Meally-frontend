@@ -40,40 +40,41 @@ export default {
     };
   },
   methods: {
-    async login() {
-      let json = { email: this.email, password: this.password };
-      await fetch('https://meally-backend.onrender.com/user/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(json),
-        credentials: 'include'
-      })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        } else {
-          throw new Error("Login failed");
-        }
-      })
-      .then((data) => {
-        console.log(data);
-        const cookies = data.cookies;
-        if (!this.$cookies.get("loginToken")) {
-          this.$cookies.set("loginToken", cookies.loginToken);
-        }
-        if (!this.$cookies.get("email")) { 
-          this.$cookies.set("email", cookies.email);
-        }
-        if (!this.$cookies.get("username")) {
-          this.$cookies.set("username", cookies.username);
-        }
-        this.$router.push('/');
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+async login() {
+  let json = { email: this.email, password: this.password };
+  await fetch('https://meally-backend.onrender.com/user/login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(json),
+    credentials: 'include'
+  })
+  .then((res) => {
+    if (res.ok) {
+      return res.json();
+    } else {
+      throw new Error("Login failed");
     }
-  }
+  })
+  .then((data) => {
+    console.log(data);
+    const cookies = data.cookies;
+    if (!this.$cookies.get("loginToken")) {
+      this.$cookies.set("loginToken", cookies.loginToken);
+    }
+    if (!this.$cookies.get("email")) { 
+      this.$cookies.set("email", cookies.email);
+    }
+    if (!this.$cookies.get("username")) {
+      this.$cookies.set("username", cookies.username);
+    }
+    this.$store.dispatch('setUserId', cookies.user_id);
+    this.$router.push('/');
+  })
+  .catch((error) => {
+    console.error("Error:", error);
+  });
+}
+}
 };
 </script>
   

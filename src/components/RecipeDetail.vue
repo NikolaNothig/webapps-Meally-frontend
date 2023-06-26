@@ -16,7 +16,7 @@
               </p>
           </div>
       </div>
-      <div v-if="userId" class="rate-recipe-section text-center mt-4">
+      <div v-if="getUserId" class="rate-recipe-section text-center mt-4">
           <h3>Rate this recipe:</h3>
           <form @submit.prevent="submitRating" class="row g-3 mt-3 justify-content-center">
               <div class="col-auto">
@@ -44,125 +44,121 @@
 
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
   props: ['id'],
   data() {
-      return {
-          userId: null,
-          newRating: null,
-          newDifficulty: null,
-          userHasRated: false,
-          recipe: {
-              title: '',
-              ingredients: [],
-              preparation: '',
-              createdBy: { username: '' },
-              ratings: [],
-              rating: 0,
-              difficulty: 0,
-              image: '',
-          },
-          message: ''
-      }
+    return {
+      newRating: null,
+      newDifficulty: null,
+      userHasRated: false,
+      recipe: {
+        title: '',
+        ingredients: [],
+        preparation: '',
+        createdBy: { username: '' },
+        ratings: [],
+        rating: 0,
+        difficulty: 0,
+        image: '',
+      },
+      message: ''
+    }
   },
-
+  computed: {
+    ...mapGetters(['getUserId'])
+  },
   async created() {
-      this.userId = this.$cookies.get('userId');
-      const id = this.$route.params.id;
-      const response = await fetch(`https://meally-backend.onrender.com/recipes/${id}`);
-      const recipe = await response.json();
-      if (recipe.ingredients && recipe.title && recipe.preparation) {
-          this.recipe = {
-              id: recipe._id,
-              title: recipe.title,
-              ingredients: recipe.ingredients,
-              preparation: recipe.preparation,
-              createdBy: recipe.createdBy || { username: '' },
-              ratings: recipe.ratings || [],
-              rating: this.calculateAverageRating(recipe.ratings),
-              difficulty: this.calculateAverageDifficulty(recipe.ratings),
-              image: recipe.image,
-          }
-
-          const userRating = recipe.ratings.find(rating => rating.user === this.userId);
-          if (userRating) {
-              this.userHasRated = true;
-              this.newRating = userRating.rating;
-              this.newDifficulty = userRating.difficulty;
-          }
-      } else {
-          console.error('Invalid recipe:', recipe);
+    const id = this.$route.params.id;
+    const response = await fetch(`https://meally-backend.onrender.com/recipes/${id}`);
+    const recipe = await response.json();
+    if (recipe.ingredients && recipe.title && recipe.preparation) {
+      this.recipe = {
+        id: recipe._id,
+        title: recipe.title,
+        ingredients: recipe.ingredients,
+        preparation: recipe.preparation,
+        createdBy: recipe.createdBy || { username: '' },
+        ratings: recipe.ratings || [],
+        rating: this.calculateAverageRating(recipe.ratings),
+        difficulty: this.calculateAverageDifficulty(recipe.ratings),
+        image: recipe.image,
       }
+
+      const userRating = recipe.ratings.find(rating => rating.user === this.$store.getters.getUserId);
+      if (userRating) {
+        this.userHasRated = true;
+        this.newRating = userRating.rating;
+        this.newDifficulty = userRating.difficulty;
+      }
+    } else {
+      console.error('Invalid recipe:', recipe);
+    }
   },
   methods: {
-      getImageUrl(imagePath) {
-          return `https://meally-backend.onrender.com${imagePath}`;
-      },
-      calculateAverageRating(ratings) {
-          if (!ratings || !ratings.length) return 0;
-          const sum = ratings.reduce((acc, curr) => acc + curr.rating, 0);
-          return sum / ratings.length;
-      },
-      calculateAverageDifficulty(ratings) {
-          if (!ratings || !ratings.length) return 0;
-          const sum = ratings.reduce((acc, curr) => acc + curr.difficulty, 0);
-          return sum / ratings.length;
-      },
-      async submitRating() {
-          const route = this.userHasRated ?
-              `https://meally-backend.onrender.com/recipes/${this.recipe.id}/rate` :
-              `https://meally-backend.onrender.com/recipes/${this.recipe.id}/rate`;
+    getImageUrl(imagePath) {
+      return `https://meally-backend.onrender.com${imagePath}`;
+    },
+    calculateAverageRating(ratings) {
+      if (!ratings || !ratings.length) return 0;
+      const sum = ratings.reduce((acc, curr) => acc + curr.rating, 0);
+      return sum / ratings.length;
+    },
+    calculateAverageDifficulty(ratings) {
+      if (!ratings || !ratings.length) return 0;
+      const sum = ratings.reduce((acc, curr) => acc + curr.difficulty, 0);
+      return sum / ratings.length;
+    },
+    async submitRating() {
+      const route = this.userHasRated ?
+        `https://meally-backend.onrender.com/recipes/${this.recipe.id}/rate` :
+        `https://meally-backend.onrender.com/recipes/${this.recipe.id}/rate`;
 
-          const method = this.userHasRated ? 'PUT' : 'POST';
+      const method = this.userHasRated ? 'PUT' : 'POST';
 
-          try {
-              const response = await fetch(route, {
-                  method: method,
-                  headers: {
-                      'Content-Type': 'application/json',
-                  },
-                  body: JSON.stringify({
-                      userId: this.userId,
-                      rating: this.newRating,
-                      difficulty: this.newDifficulty,
-                  }),
-              });
+      try {
+        const response = await fetch(route, {
+          method: method,
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            userId: this.$store.getters.getUserId,
+            rating: this.newRating,
+            difficulty: this.newDifficulty,
+          }),
+        });
 
-              if (!response.ok) {
-                  throw new Error(`HTTP error! status: ${response.status}`);
-              }
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
 
-              const data = await response.json();
+        const data = await response.json();
 
-              if (data.error) {
-                  this.message = data.error;
-                  return;
-              }
+        if (data.error) {
+          this.message = data.error;
+          return;
+        }
 
-              this.recipe.ratings = this.recipe.ratings.filter(rating => rating.user !== this.userId);
-              this.recipe.ratings.push({
-                  user: this.userId,
-                  rating: this.newRating,
-                  difficulty: this.newDifficulty,
-              });
-              this.recipe.rating = this.calculateAverageRating(this.recipe.ratings);
-              this.recipe.difficulty = this.calculateAverageDifficulty(this.recipe.ratings);
+        this.recipe.ratings = this.recipe.ratings.filter(rating => rating.user !== this.$store.getters.getUserId); 
+        this.recipe.ratings.push({
+          user: this.$store.getters.getUserId,
+          rating: this.newRating,
+          difficulty: this.newDifficulty,
+        });
+        this.recipe.rating = this.calculateAverageRating(this.recipe.ratings);
+        this.recipe.difficulty = this.calculateAverageDifficulty(this.recipe.ratings);
+        this.userHasRated = true;
 
-              this.userHasRated = true;
-
-              this.newRating = null;
-              this.newDifficulty = null;
-
-              this.message = "Your rating was successfully submitted!";
-
-              window.location.reload();
-          } catch (error) {
-              console.error('Failed to rate recipe:', error);
-          }
+      } catch (error) {
+        console.error('Failed to rate recipe:', error);
       }
+    }
   }
-};
+}
 </script>
+
 
 <style scoped>
 .container {
