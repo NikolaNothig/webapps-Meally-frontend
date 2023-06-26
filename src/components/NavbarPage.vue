@@ -76,11 +76,12 @@ export default {
 
     const logout = () => {
       document.cookie = "loginToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-      isLoggedIn.value = false
-      router.push("/").then(() => {
-        window.location.reload();
-      });
+      document.cookie = "email=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      isLoggedIn.value = false;
+      router.push("/login");
     }
+
 
     const redirectToRegister = () => {
       router.push("/register").then(() => {
@@ -127,7 +128,15 @@ export default {
 
       const recipesResponse = await fetch('https://meally-backend.onrender.com/recipes');
       const recipes = await recipesResponse.json();
-      allIngredients.value = [...new Set(recipes.flatMap(recipe => recipe.ingredients))];
+
+      const uniqueIngredients = new Set();
+      recipes.forEach(recipe => {
+        recipe.ingredients.forEach(ingredient => {
+          uniqueIngredients.add(ingredient);
+        });
+      });
+
+      allIngredients.value = [...uniqueIngredients];
     });
 
     return {

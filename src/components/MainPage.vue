@@ -32,7 +32,7 @@ import { watch } from 'vue';
 
 export default {
   setup() {
-    const isLoggedIn = ref(!!getCookie('loginToken')) // use getCookie here
+    const isLoggedIn = ref(!!getCookie('loginToken'))
     const recipes = ref([])
     const searchInput = ref('')
     const route = useRoute();
@@ -58,7 +58,7 @@ export default {
     }, { immediate: true });
 
     watchEffect(() => {
-      isLoggedIn.value = !!getCookie('loginToken') // use getCookie here
+      isLoggedIn.value = !!getCookie('loginToken') 
     })
     watchEffect(() => {
       fetchRecipes();
