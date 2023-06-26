@@ -3,7 +3,7 @@
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
       <div class="d-flex align-items-center">
-        <router-link to="/main" class="text text-decoration-none" @click="resetSearch">
+        <router-link to="/" class="text text-decoration-none" @click="resetSearch">
           <h1 class="naslov fw-bold">Meally</h1>
         </router-link>
         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
@@ -32,7 +32,7 @@
               <span v-else @click="handleCreateRecipeClick" class="styled-link clickable">Create Recipe</span>
             </h1>
           </li>
-          <li class="nav-item" v-if="route.path === '/main'">
+          <li class="nav-item" v-if="route.path === '/'">
             <form @submit.prevent="submitSearch" class="nav-link">
               <select v-model="searchInput">
                 <option disabled value="">Please select an ingredient</option>
@@ -78,44 +78,8 @@ export default {
       document.cookie = "loginToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
       isLoggedIn.value = false
       router.push("/").then(() => {
-        router.isReady().then(() => {
-          window.location.reload();
-        });
-      });
-    }
-
-
-    const redirectToRegister = () => {
-      router.push("/register").then(() => {
         window.location.reload();
       });
-    }
-
-    const search = async () => {
-      const response = await fetch(`https://meally-backend.onrender.com/recipes/search?ingredients=${searchInput.value}`);
-      const recipes = await response.json();
-      console.log(recipes);
-    }
-
-    const resetSearch = () => {
-      searchInput.value = '';
-      router.push({ path: '/main' });
-    }
-
-    const submitSearch = () => {
-      router.push({ path: '/main', query: { search: searchInput.value } });
-    }
-
-    const handleProfileClick = () => {
-      if (!isLoggedIn.value) {
-        alert("You need to log in first!");
-      }
-    }
-
-    const handleCreateRecipeClick = () => {
-      if (!isLoggedIn.value) {
-        alert("You need to log in first!");
-      }
     }
 
     onMounted(async () => {
