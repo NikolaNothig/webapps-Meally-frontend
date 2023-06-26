@@ -1,5 +1,5 @@
 <template>
-  <div class = "image"></div>
+  <div class="image"></div>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
       <div class="d-flex align-items-center">
@@ -119,10 +119,20 @@ export default {
     }
 
     onMounted(async () => {
-      const response = await fetch('https://meally-backend.onrender.com/recipes');
-      const recipes = await response.json();
+      const response = await fetch('https://meally-backend.onrender.com/api/user/check-login', {
+        credentials: 'include'
+      });
+      if (response.status === 200) {
+        isLoggedIn.value = true;
+      } else {
+        isLoggedIn.value = false;
+      }
+
+      const recipesResponse = await fetch('https://meally-backend.onrender.com/recipes');
+      const recipes = await recipesResponse.json();
       allIngredients.value = [...new Set(recipes.flatMap(recipe => recipe.ingredients))];
     });
+
 
     return {
       isLoggedIn,
@@ -170,10 +180,12 @@ export default {
   margin-left: 5px;
 }
 
-.styled-button:hover, .styled-button:active, .styled-button:focus {
-    background-color: #ff8a00;
-    border-color: #ff8a00;
-    color: white;
+.styled-button:hover,
+.styled-button:active,
+.styled-button:focus {
+  background-color: #ff8a00;
+  border-color: #ff8a00;
+  color: white;
 }
 
 .clickable {
