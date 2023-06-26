@@ -33,7 +33,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 ![image](https://github.com/NikolaNothig/webapps-Meally-frontend/assets/115481213/9ac47200-8b1b-4910-bbd5-cce27e29d96d)
 ![image](https://github.com/NikolaNothig/webapps-Meally-frontend/assets/115481213/cb2573c3-5fbc-4922-8d52-ba74c4866a8d)
 ![image](https://github.com/NikolaNothig/webapps-Meally-frontend/assets/115481213/9572f33a-3742-41a9-ac3e-c5da342e5340)
-![image](https://github.com/NikolaNothig/webapps-Meally-frontend/assets/115481213/32d50aac-e65d-421d-947b-b9704ce32b96)
+![image](https://github.com/NikolaNothig/webapps-Meally-frontend/assets/115481213/e995b0d4-5fa0-4c74-95c6-0151261a4c35)
 
 
 
