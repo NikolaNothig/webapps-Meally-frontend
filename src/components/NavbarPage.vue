@@ -82,6 +82,39 @@ export default {
       });
     }
 
+    const redirectToRegister = () => {
+      router.push("/register").then(() => {
+        window.location.reload();
+      });
+    }
+
+    const search = async () => {
+      const response = await fetch(`https://meally-backend.onrender.com/recipes/search?ingredients=${searchInput.value}`);
+      const recipes = await response.json();
+      console.log(recipes);
+    }
+
+    const resetSearch = () => {
+      searchInput.value = '';
+      router.push({ path: '/main' });
+    }
+
+    const submitSearch = () => {
+      router.push({ path: '/main', query: { search: searchInput.value } });
+    }
+
+    const handleProfileClick = () => {
+      if (!isLoggedIn.value) {
+        alert("You need to log in first!");
+      }
+    }
+
+    const handleCreateRecipeClick = () => {
+      if (!isLoggedIn.value) {
+        alert("You need to log in first!");
+      }
+    }
+
     onMounted(async () => {
       const response = await fetch('https://meally-backend.onrender.com/user/check-login', {
         credentials: 'include'
@@ -96,7 +129,6 @@ export default {
       const recipes = await recipesResponse.json();
       allIngredients.value = [...new Set(recipes.flatMap(recipe => recipe.ingredients))];
     });
-
 
     return {
       isLoggedIn,
