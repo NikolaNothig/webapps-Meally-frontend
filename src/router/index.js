@@ -49,7 +49,8 @@ const routes = [
   },
   {
     path: '/',
-    redirect: '/main'
+    name: 'main',
+    component: MainPage,
   }
 ]
 
